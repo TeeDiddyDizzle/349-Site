@@ -1,0 +1,37 @@
+body {
+    background-color: red;
+}
+
+.name {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pictures {
+    color: white;
+}
+
+.nav {
+    list-style-type: square;
+    width: 200px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: rgb(197, 197, 197);
+}
+
+.link
+{
+    color: white;
+    text-decoration: none; 
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
+}
+
+.link:hover {
+    color: rgb(70, 70, 70)
+}
