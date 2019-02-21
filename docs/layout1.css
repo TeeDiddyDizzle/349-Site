@@ -1,0 +1,16 @@
+body  {
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
+}
+
+header {
+    display: flex;
+    align-self: flex-start;
+    order: 0;
+}
+
+footer {
+    display: flex;
+    order: 100;
+}

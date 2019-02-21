@@ -1,0 +1,30 @@
+header {
+    border-style: solid;
+    border-width: 0.5px;
+    border-radius: 5px;
+}
+
+footer {
+    border-style: solid;
+    border-width: 0.5px;
+    border-radius: 5px;
+    border-color: red
+
+
+}
+
+.navigation {
+    border-style: solid;
+    border-width: 0.5px;
+    border-radius: 5px;
+    border-color: blue;
+    background-color: grey;
+
+}
+
+section {
+    border-style: solid;
+    border-width: 0.5px;
+    border-radius: 5px;
+    border-color: pink;
+}

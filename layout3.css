@@ -1,0 +1,50 @@
+.content {
+    flex-flow: column;
+}
+
+#nav-articles ol {
+    display: flex;
+    flex-flow: row;
+}
+#nav-articles li {
+    padding: 0px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.navigation {
+    padding: 5px;
+    display: flex;
+    flex-flow: row;
+    align-self: center; 
+    width: 100%;
+    align-content: flex-start;
+}
+
+
+main {
+    display: flex;
+    flex-flow: row;
+}
+
+#nav-one ul {
+    display: flex;
+    flex-flow: row;
+}
+
+#nav-one li {
+    padding: 0px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+#nav-two ul {
+    display: flex;
+    flex-flow: row;
+}
+
+#nav-two li {
+    padding: 0px;
+    margin-left: 10px;
+    margin-right: 20px;
+}

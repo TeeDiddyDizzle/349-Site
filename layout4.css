@@ -1,0 +1,19 @@
+main {
+    flex-flow: column;
+}
+
+.one-paragraphs {
+    display: flex;
+    flex-flow: column;
+}
+
+.paragraphs {
+    display: flex;
+    flex-flow: row;
+}
+
+
+.two-paragraphs {
+    display: flex;
+    flex-flow: column;
+}

@@ -1,0 +1,14 @@
+.content {
+    display: flex;
+    flex-flow: row;
+    background-color: white;
+}
+
+.navigation {
+    padding: 5px;
+    display: flex;
+    flex-flow: column;
+    align-self: flex-start; 
+    align-content: flex-start;
+}
+

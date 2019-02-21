@@ -1,0 +1,25 @@
+#nav-articles.navigation {
+    color: white;
+    background-color: grey;
+    position: sticky;
+    top: 0px;
+}
+
+#nav-articles.navigation a {
+    color: white;
+
+}
+
+#nav-one {
+    top: 65px;
+    position: sticky;
+}
+
+#nav-two {
+    top: 65px;
+    position: sticky;
+}
+
+main {
+    margin-left: 50px;
+}
