@@ -1,0 +1,156 @@
+body {
+    background-color: rgb(105, 105, 105);
+    font-family: oswald, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    font-style: normal;
+    color: white;
+}
+
+.name {
+    font-family: bungee, sans-serif;
+    font-size: 70px;
+    font-weight: 600;
+    margin-left: 50px;
+    margin-bottom: 0;
+    letter-spacing: 5px;
+}
+
+p {
+    /* margin-top: 200px; */
+    text-align: center;
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+.portfolio {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    vertical-align: middle;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    margin: 0 20px 0 20px;
+    padding: 50px 15px 50px 15px;
+    min-width: 900px;
+
+}
+
+.portfolio p {
+    margin: 0;
+    font-size: 15px;
+    float: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 100;
+}
+
+.pictures {
+    color: white;
+}
+
+.image {
+    border-style: solid;
+    margin: 20px 0 20px 0;
+    width: 95%; 
+    height: 500px; 
+    overflow: auto;
+    min-width: 800px;
+    
+}
+
+.bg {
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 800px;
+}
+
+.one {
+    background-image: url('/Open Inventory/OI1.png');
+}
+.two {
+    background-image: url('/Open Inventory/OI2.png');
+}
+.three {
+    background-image: url('/Open Inventory/OI3.png');
+}
+.four {
+    background-image: url('/Open Inventory/OI4.png');
+}
+.five {
+    background-image: url('/Open Inventory/OI5.png');
+    height: 1250px;
+}
+
+@media (max-width:400px){
+    .bg {
+        height: 200px !important;
+    }
+
+    .five {
+        height: 600px;
+    }
+}
+
+@media (max-width:1200px){
+    .image {
+        height: 420px;
+    }
+    .bg {
+        height: 400px !important;
+    }
+
+    .five {
+        height: 800px !important;
+    }
+}
+
+@media (max-width:1400px){
+    .bg {
+        height: 600px;
+    }
+
+    .five {
+        height: 900px;
+    }
+}
+
+.tile {
+    background-color: white;
+    width: 300px;
+    height: 200px;
+    margin: 0 50px 0 50px;
+    text-decoration: none;
+}
+
+.tile p {
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 100;
+}
+
+.nav {
+    list-style-type: square;
+    width: 200px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: rgb(197, 197, 197);
+}
+
+.link
+{
+    color: white;
+    text-decoration: none; 
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
+}
+
+.link:hover {
+    color: rgb(70, 70, 70)
+}
