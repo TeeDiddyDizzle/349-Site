@@ -45,11 +45,13 @@ p {
 }
 
 @media (max-width: 475px) {
+    .name {
+        font-size: 60px !important;
+    }
     .portfolio {
         margin: 5px 5px 5px 5px;
         /* border-style: none; */
     }
-
     .tile {
         min-width: 325px !important;
         max-width: 325px !important;

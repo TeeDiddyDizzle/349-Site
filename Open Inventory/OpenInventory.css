@@ -81,15 +81,16 @@ p {
     height: 1250px;
 }
 
-@media (max-width:400px){
+@media (max-width:1400px){
     .bg {
-        height: 200px !important;
+        height: 600px;
     }
 
     .five {
-        height: 600px;
+        height: 900px;
     }
 }
+
 
 @media (max-width:1200px){
     .image {
@@ -104,16 +105,31 @@ p {
     }
 }
 
-@media (max-width:1400px){
-    .bg {
-        height: 600px;
+@media (max-width:475px){
+    .name {
+        font-size: 60px !important;
     }
+
+    .portfolio {
+        min-width: 300px;
+        margin: 5px 5px 5px 5px;
+    }
+
+    .image {
+        height: 150px;
+        min-width: 300px;
+        border-width: 1px;
+    }
+    .bg {
+        height: 175px !important;
+    }
+
 
     .five {
-        height: 900px;
+        height: 275px !important;
     }
-}
 
+}
 .link
 {
     color: rgb(217, 217, 245);
