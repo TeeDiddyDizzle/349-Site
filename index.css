@@ -144,5 +144,6 @@ p {
 
 .home:hover {
     color: rgb(179, 179, 179);
+    text-shadow: 0px 5px 6px #0000007a;
 }
 
