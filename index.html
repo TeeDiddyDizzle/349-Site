@@ -14,19 +14,16 @@
         <p class="unselectable">PORTFOLIO</p>
 
         <div class="portfolio">
-            <!-- <ul class="nav">
-                <a class="link" href="interest.html"><li>Interests</li></a>
-                <a class="link" href="summary.html"><li>Why I am here</li></a>
-                <a class="link" href="pictures.html"><li>Pictures</li></a>
-            </ul> -->
-            <a class="tile t1 unselectable" href="/Ayli/Ayli.html"><p>AYLI</p></a>
-            <a class="tile t2 unselectable" href="/Open Inventory/OpenInventory.html"><p>OPEN INVENTORY</p></a>
-            <a class="tile t3 unselectable" href="/Cocoweb/index.html"><p>COCOWEB</p></a>
-
-
+            <a class="tile t1 unselectable" href="javascript:delay('/Ayli/Ayli.html')"><p>AYLI</p></a>
+            <a class="tile t2 unselectable" href="javascript:delay('/Open Inventory/OpenInventory.html')"><p>OPEN INVENTORY</p></a>
+            <a class="tile t3 unselectable" href="javascript:delay('/Cocoweb/index.html')"><p>COCOWEB</p></a>
         </div>
         
         
-        <script src="" async defer></script>
+        <script type="text/javascript" async defer>
+        function delay (URL) {
+            setTimeout( function() { window.location = URL }, 0 );
+        }
+        </script>
     </body>
 </html>

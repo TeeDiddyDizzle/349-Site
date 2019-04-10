@@ -38,7 +38,6 @@ p {
     margin: 0 20px 30px 20px;
     padding: 50px 15px 0px 15px;
     min-height: 350px;
-    transition: 0.5s;
     -o-transition:.15s;
     -ms-transition:.15s;
     -moz-transition:.15s;
@@ -64,7 +63,6 @@ p {
     }
     .portfolio {
         margin: 5px 5px 5px 5px;
-        /* border-style: none; */
     }
     .tile {
         min-width: 325px !important;
@@ -95,10 +93,20 @@ p {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
 }
 
+
+.animator {
+    margin-top: 0;
+}
+
+.animator:hover {
+    color: black;
+    margin-top: 100px;
+    display: none;
+}
+
 .tile:hover p{
     opacity: 1;
 }
-
 
 .tile p {
     opacity: 0;
@@ -128,13 +136,14 @@ p {
 }
 
 .tile:hover {
-    opacity: 0.8;
+    opacity: 0.6;
     min-width: 425px;
     max-width: 425px;
     height: 212px;
     background-size: 425px 212px;
-
 }
+
+
 .link
 {
 
