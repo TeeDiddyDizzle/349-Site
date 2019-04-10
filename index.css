@@ -32,6 +32,7 @@ p {
     flex-wrap: wrap; 
     justify-content: space-between;
     border-style: solid;
+    border-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
     border-radius: 5px;
     margin: 0 20px 30px 20px;

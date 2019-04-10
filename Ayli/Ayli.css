@@ -30,6 +30,7 @@ p {
     vertical-align: middle;
     flex-direction: column;
     border-style: solid;
+    border-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
     border-radius: 5px;
     margin: 0 20px 0 20px;
@@ -53,6 +54,7 @@ p {
 .image {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
     border-style: solid;
+    border-color: rgba(0, 0, 0, 0.3);
     margin: 20px 0 20px 0;
     width: 95% !important; 
     height: 500px !important; 
