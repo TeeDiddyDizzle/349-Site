@@ -54,17 +54,26 @@ p {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
     border-style: solid;
     margin: 20px 0 20px 0;
-    width: 95%; 
-    height: 500px; 
+    width: 95% !important; 
+    height: 500px !important; 
     overflow: auto;
     min-width: 800px;
-    
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
 }
 
 .bg {
     background-size: 100%;
     background-repeat: no-repeat;
     height: 850px;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
 }
 
 .one {
@@ -88,23 +97,23 @@ p {
 }
 @media (max-width:1400px){
     .bg {
-        height: 600px;
+        height: 600px !important;
     }
 }
 
 @media (max-width:1200px){
     .image {
-        height: 420px;
+        height: 420px !important;
     }
     .bg {
-        height: 500px;
+        height: 500px !important;
     }
 }
 
 
 @media (max-width:1000px){
     .image {
-        height: 400px;
+        height: 400px !important;
     }
     .bg {
         height: 400px !important;
@@ -123,7 +132,7 @@ p {
     }
 
     .image {
-        height: 150px;
+        height: 150px !important;
         min-width: 300px;
         border-width: 1px;
     }
