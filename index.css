@@ -131,8 +131,8 @@ p {
     background-size: 400px 200px;
 }
 .t3 {
-    background-image: url('/Cocoweb/CW1.png');
-    background-size: 400px 200px;
+    background-image: url('/Sprite Game/Sprite.png');
+    background-size: 430px 200px;
 }
 
 .tile:hover {
@@ -146,7 +146,6 @@ p {
 
 .link
 {
-
     color: rgb(217, 217, 245);
     text-decoration: none; 
     -o-transition:.15s;
