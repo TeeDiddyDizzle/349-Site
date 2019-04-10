@@ -129,8 +129,9 @@ p {
     color: rgb(179, 179, 179)
 }
 
-.name
+.home
 {
+    color: rgb(255, 255, 255);
     text-decoration: none; 
     -o-transition:.15s;
     -ms-transition:.15s;
@@ -139,7 +140,8 @@ p {
     transition:.15s;
 }
 
-
-.name:hover {
+.home:hover {
     color: rgb(179, 179, 179);
+    text-shadow: 0px 5px 6px #0000007a;
 }
+

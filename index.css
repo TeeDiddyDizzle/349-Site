@@ -17,6 +17,10 @@ body {
     letter-spacing: 5px;
 }
 
+.home {
+    width: 300px !important;
+}
+
 p {
     /* margin-top: 200px; */
     text-align: center;
@@ -25,12 +29,25 @@ p {
 }
 .portfolio {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap; 
+    justify-content: space-around;
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
     margin: 0 20px 0 20px;
     padding: 50px 15px 50px 15px;
+    transition: 0.5s;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
+}
+
+@media (max-width: 1500px) {
+    .portfolio {
+        /* flex-direction: column; */
+    }
 }
 
 .pictures {
@@ -38,6 +55,7 @@ p {
 }
 
 .tile {
+    margin-top: 50px !important;
     background-color: white;
     min-width: 400px;
     max-width: 400px;
@@ -66,6 +84,7 @@ p {
     opacity: 0;
     font-size: 40px;
     letter-spacing: 2px;
+    text-shadow: 0px 2px 4px #0000007a;
     font-weight: 100;
     -o-transition:.15s;
     -ms-transition:.15s;
@@ -90,6 +109,7 @@ p {
 
 .link
 {
+
     color: rgb(217, 217, 245);
     text-decoration: none; 
     -o-transition:.15s;
@@ -103,8 +123,9 @@ p {
     color: rgb(179, 179, 179)
 }
 
-.name
+.home
 {
+    color: rgb(255, 255, 255);
     text-decoration: none; 
     -o-transition:.15s;
     -ms-transition:.15s;
@@ -113,7 +134,7 @@ p {
     transition:.15s;
 }
 
-
-.name:hover {
+.home:hover {
     color: rgb(179, 179, 179);
 }
+
