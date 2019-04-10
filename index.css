@@ -44,9 +44,16 @@ p {
     transition:.15s;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 475px) {
     .portfolio {
-        /* flex-direction: column; */
+        margin: 5px 5px 5px 5px;
+        /* border-style: none; */
+    }
+
+    .tile {
+        min-width: 325px !important;
+        max-width: 325px !important;
+        margin: 0 0 20px 0 !important;
     }
 }
 
@@ -55,12 +62,11 @@ p {
 }
 
 .tile {
-    margin-top: 50px !important;
     background-color: white;
     min-width: 400px;
     max-width: 400px;
     height: 200px;
-    margin: 0 50px 0 50px;
+    margin: 50px 50px 50px 50px;
     text-decoration: none;
     color: white;
     -webkit-text-stroke: 1px;
