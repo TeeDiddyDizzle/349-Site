@@ -46,6 +46,9 @@ p {
     font-weight: 100;
 }
 
+.pictures {
+    color: white;
+}
 
 .image {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
@@ -61,32 +64,30 @@ p {
 .bg {
     background-size: 100%;
     background-repeat: no-repeat;
-    height: 800px;
+    height: 850px;
 }
 
 .one {
-    background-image: url('/Open Inventory/OI1.png');
+    background-image: url('/Ayli/Ayli1.png');
 }
 .two {
-    background-image: url('/Open Inventory/OI2.png');
+    background-image: url('/Ayli/Ayli2.png');
 }
 .three {
-    background-image: url('/Open Inventory/OI3.png');
+    background-image: url('/Ayli/Ayli3.png');
 }
 .four {
-    background-image: url('/Open Inventory/OI4.png');
-}
-.five {
-    background-image: url('/Open Inventory/OI5.png');
-    height: 1250px;
+    background-image: url('/Ayli/Ayli4.png');
 }
 
-@media (max-width:400px){
+
+@media (max-width:1600px){
     .bg {
-        height: 200px !important;
+        height: 700px;
     }
-
-    .five {
+}
+@media (max-width:1400px){
+    .bg {
         height: 600px;
     }
 }
@@ -96,22 +97,19 @@ p {
         height: 420px;
     }
     .bg {
-        height: 400px !important;
-    }
-
-    .five {
-        height: 800px !important;
+        height: 500px;
     }
 }
 
-@media (max-width:1400px){
+
+@media (max-width:1000px){
+    .image {
+        height: 400px;
+    }
     .bg {
-        height: 600px;
+        height: 400px !important;
     }
 
-    .five {
-        height: 900px;
-    }
 }
 
 .link
@@ -125,8 +123,9 @@ p {
     transition:.15s;
 }
 
+
 .link:hover {
-    color: rgb(179, 179, 179)
+    color: rgb(179, 179, 179);
 }
 
 .name

@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(105, 105, 105);
+    background-color: rgb(73, 73, 73);
     font-family: oswald, sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -8,6 +8,7 @@ body {
 }
 
 .name {
+    color: white;
     font-family: bungee, sans-serif;
     font-size: 70px;
     font-weight: 600;
@@ -38,32 +39,58 @@ p {
 
 .tile {
     background-color: white;
-    width: 300px;
+    min-width: 400px;
+    max-width: 400px;
     height: 200px;
     margin: 0 50px 0 50px;
     text-decoration: none;
+    color: white;
+    -webkit-text-stroke: 1px;
+    -webkit-text-stroke-color: black;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
+}
+
+.tile:hover p{
+    opacity: 1;
+}
+.tile:hover{
+    opacity: 0.8;
 }
 
 .tile p {
-    font-size: 20px;
+    opacity: 0;
+    font-size: 40px;
     letter-spacing: 2px;
     font-weight: 100;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
 }
 
-.nav {
-    list-style-type: square;
-    width: 200px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 5px;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    background-color: rgb(197, 197, 197);
+.t1 {
+    background-image: url('/Ayli/Ayli1.png');
+    background-size: 400px 200px;
 }
+.t2 {
+    background-image: url('/Open Inventory/OI1.png');
+    background-size: 400px 200px;
+}
+.t3 {
+    background-image: url('/Cocoweb/CW1.png');
+    background-size: 400px 200px;
+}
+
 
 .link
 {
-    color: white;
+    color: rgb(217, 217, 245);
     text-decoration: none; 
     -o-transition:.15s;
     -ms-transition:.15s;
@@ -73,5 +100,20 @@ p {
 }
 
 .link:hover {
-    color: rgb(70, 70, 70)
+    color: rgb(179, 179, 179)
+}
+
+.name
+{
+    text-decoration: none; 
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
+}
+
+
+.name:hover {
+    color: rgb(179, 179, 179);
 }
