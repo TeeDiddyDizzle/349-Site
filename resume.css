@@ -34,6 +34,12 @@ p {
     font-family: oswald, sans-serif;
     font-weight: 400;
 }
+
+.vl {
+    border-left: 2px solid rgb(255, 255, 255);
+    height: 20px;
+}
+  
 .portfolio {
     display: flex;
     position: absolute;
@@ -115,17 +121,6 @@ p {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
 }
 
-
-.animator {
-    margin-top: 0;
-}
-
-.animator:hover {
-    color: black;
-    margin-top: 100px;
-    display: none;
-}
-
 .tile:hover p{
     opacity: 1;
 }
@@ -156,6 +151,7 @@ p {
     background-image: url('/Sprite Game/Sprite.png');
     background-size: 430px 200px;
 }
+
 
 .tile:hover {
     opacity: 0.6;
