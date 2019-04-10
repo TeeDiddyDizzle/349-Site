@@ -143,6 +143,14 @@ p {
     background-size: 425px 212px;
 }
 
+.t3:hover {
+    opacity: 0.6;
+    min-width: 425px;
+    max-width: 425px;
+    height: 212px;
+    background-size: 450px 212px;
+}
+
 
 .link
 {
