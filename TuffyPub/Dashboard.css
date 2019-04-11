@@ -8,6 +8,26 @@ body {
     flex-direction: column;
 }
 
+.return {
+    margin-top: 10px;
+    font-family: oswald;
+    color: white;
+    text-align: center;
+    z-index: 100;
+    text-decoration: none;
+    font-size: 50px;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.459);
+    transition: 0.3s
+}
+
+.return:hover {
+    color: rgb(230, 230, 230);
+}
+
+a:active, a:focus {
+    outline: none !important;
+}
+
 .nav {
     position: fixed;
     display: flex;

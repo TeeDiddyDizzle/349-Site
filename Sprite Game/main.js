@@ -46,71 +46,71 @@ function moverobotRight () {
     pos = 480;
   }
   pos += 60;
+  if (pos > 540) {
+    pos = 540;
+  }
   robotObj[0].style.left = pos + 'px';
 }
 
 function moverobotLeft () {
   var pos = robotObj[0].offsetLeft;
-  if (pos <= 0) {
-    console.log(pos);
-    pos = 60;
-  }
   pos -= 60;
+  if (pos < 0) {
+    pos = 0;
+  }  
   robotObj[0].style.left = pos + 'px';
 }
 
 function moverobotDown () {
   var pos = robotObj[0].offsetTop;
-  if (pos >= 540) {
-    pos = 480
-  }
   pos += 60;
+  if (pos > 540) {
+    pos = 540;
+  }
   robotObj[0].style.top = pos + 'px';
 }
 
 function moverobotUp () {
   var pos = robotObj[0].offsetTop;
-  if (pos <= 0) {
-    pos = 60;
-  }
   pos -= 60;
+  if (pos < 0) {
+    pos = 0;
+  }  
   robotObj[0].style.top = pos + 'px';
 }
 // *** Move Set For zombie Object **** //
 function movezombieRight () {
   var pos = zombieObj[0].offsetLeft;
-  if (pos >= 540) {
-    pos = 480
-  }
   pos += 0;
+  if (pos >= 480) {
+    pos = 480;
+  }  
   zombieObj[0].style.left = pos + 'px';
 }
 
 function movezombieLeft () {
   var pos = zombieObj[0].offsetLeft;
-  console.log(pos);
-  if (pos <= 0) {
-    pos = 60
-  }
   pos -= 120;
-  console.log(pos);
+  if (pos < -60) {
+    pos = -60;
+  }  
   zombieObj[0].style.left = pos + 'px';
 }
 
 function movezombieDown () {
   var pos = zombieObj[0].offsetTop;
-  if (pos >= 540) {
-    pos = 480
-  }
   pos += 0;
+  if (pos >= 480) {
+    pos = 480;
+  }
   zombieObj[0].style.top = pos + 'px';
 }
 
 function movezombieUp () {
   var pos = zombieObj[0].offsetTop;
-  if (pos <= 0) {
-    pos = 60
-  }
   pos -= 120;
+  if (pos < -60) {
+    pos = -60;
+  }  
   zombieObj[0].style.top = pos + 'px';
 }

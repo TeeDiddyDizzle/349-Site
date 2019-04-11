@@ -35,7 +35,7 @@ a:active, a:focus {
 .portfolio {
     display: flex;
     flex-wrap: wrap; 
-    justify-content: space-between;
+    justify-content: space-around;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
@@ -53,7 +53,7 @@ a:active, a:focus {
 @media (max-width: 1700px) {
     .portfolio {
         justify-content: space-around;
-        flex-wrap: nowrap;
+        /* flex-wrap: nowrap; */
     }
 }
 @media (max-width: 1500px) {
@@ -138,6 +138,11 @@ a:active, a:focus {
 .t3 {
     background-image: url('/Sprite Game/Sprite.png');
     background-size: 430px 200px;
+}
+
+.t4 {
+    background-image: url('/TuffyPub/Tuff2.png');
+    background-size: 400px 200px;
 }
 
 .tile:hover {
