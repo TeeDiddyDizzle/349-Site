@@ -23,6 +23,11 @@ p {
     font-size: 30px;
     letter-spacing: 2px;
 }
+
+a:active, a:focus {
+    outline: none !important;
+}
+
 .portfolio {
     display: flex;
     justify-content: space-around;

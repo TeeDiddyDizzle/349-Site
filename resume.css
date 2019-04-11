@@ -29,6 +29,10 @@ p {
     letter-spacing: 2px;
 }
 
+a:active, a:focus {
+    outline: none !important;
+}
+
 .heading {
     text-align: center;
     font-family: oswald, sans-serif;
