@@ -99,15 +99,14 @@ a:active, a:focus {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
 }
 
+.tile:hover {
+    opacity: 0.6;
+    min-width: 425px;
+    max-width: 425px;
+    height: 212px;
+    background-size: 425px 212px;
+    box-shadow: 10px 15px 15px rgba(0, 0, 0, 0.384) !important;
 
-.animator {
-    margin-top: 0;
-}
-
-.animator:hover {
-    color: black;
-    margin-top: 100px;
-    display: none;
 }
 
 .tile:hover p{
@@ -146,13 +145,7 @@ a:active, a:focus {
     background-size: 400px 200px;
 }
 
-.tile:hover {
-    opacity: 0.6;
-    min-width: 425px;
-    max-width: 425px;
-    height: 212px;
-    background-size: 425px 212px;
-}
+
 
 .t3:hover {
     opacity: 0.6;
