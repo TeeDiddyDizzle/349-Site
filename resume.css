@@ -60,8 +60,8 @@ a:active, a:focus {
     height: 65vh !important;
     max-height: 650px !important;
     overflow: auto;
+    box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.384);
 
-    
 }
 
 #page1-div {

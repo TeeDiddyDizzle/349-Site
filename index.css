@@ -48,6 +48,7 @@ a:active, a:focus {
     -moz-transition:.15s;
     -webkit-transition:.15s;
     transition:.15s;
+    box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.384);
 }
 
 @media (max-width: 1700px) {
