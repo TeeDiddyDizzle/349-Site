@@ -1,10 +1,11 @@
 body {
     background-color: rgb(43, 43, 43);
-    font-family: oswald, sans-serif;
+    font-family: source-sans-pro, sans-serif;
     font-weight: 400;
+    font-style: normal;   
     font-size: 20px;
-    font-style: normal;
     color: white;
+    position: relative;
 }
 
 .name {
@@ -23,21 +24,45 @@ body {
 
 p {
     /* margin-top: 200px; */
-    text-align: center;
+    /* text-align: center; */
     font-size: 30px;
     letter-spacing: 2px;
 }
+
+.heading {
+    text-align: center;
+    font-family: oswald, sans-serif;
+    font-weight: 400;
+}
+
+.vl {
+    border-left: 2px solid rgb(255, 255, 255);
+    height: 20px;
+}
+  
 .portfolio {
     display: flex;
+    position: absolute;
+    bottom: 0;
     flex-wrap: wrap; 
     justify-content: space-between;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
     border-radius: 5px;
-    margin: 0 20px 30px 20px;
-    padding: 50px 15px 0px 15px;
+    margin: 0 20px 10px 20px;
+    padding: 0px 15px 0px 15px;
     min-height: 350px;
+    height: 65vh !important;
+    max-height: 650px !important;
+    overflow: auto;
+
+    
+}
+
+#page1-div {
+    background-image: url('/Resume/Dat_Nguyen_April_2019001.png');
+    margin-left: 24%;
     -o-transition:.15s;
     -ms-transition:.15s;
     -moz-transition:.15s;
@@ -49,6 +74,9 @@ p {
     .portfolio {
         justify-content: space-around;
         flex-wrap: nowrap;
+    }
+    #page1-div {
+        margin-left: 0%;
     }
 }
 @media (max-width: 1500px) {
@@ -93,17 +121,6 @@ p {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
 }
 
-
-.animator {
-    margin-top: 0;
-}
-
-.animator:hover {
-    color: black;
-    margin-top: 100px;
-    display: none;
-}
-
 .tile:hover p{
     opacity: 1;
 }
@@ -134,6 +151,7 @@ p {
     background-image: url('/Sprite Game/Sprite.png');
     background-size: 430px 200px;
 }
+
 
 .tile:hover {
     opacity: 0.6;
@@ -184,6 +202,15 @@ p {
 }
 
 .unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.res {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;

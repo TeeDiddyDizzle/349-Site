@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(73, 73, 73);
+    background-color: rgb(43, 43, 43);
     font-family: oswald, sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -30,6 +30,7 @@ p {
     vertical-align: middle;
     flex-direction: column;
     border-style: solid;
+    border-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
     border-radius: 5px;
     margin: 0 20px 0 20px;
@@ -53,18 +54,28 @@ p {
 .image {
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.384);
     border-style: solid;
+    border-color: rgba(0, 0, 0, 0.3);
     margin: 20px 0 20px 0;
-    width: 95%; 
-    height: 500px; 
+    width: 95% !important; 
+    height: 500px !important; 
     overflow: auto;
     min-width: 800px;
-    
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
 }
 
 .bg {
     background-size: 100%;
     background-repeat: no-repeat;
     height: 850px;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
 }
 
 .one {
@@ -88,26 +99,47 @@ p {
 }
 @media (max-width:1400px){
     .bg {
-        height: 600px;
+        height: 600px !important;
     }
 }
 
 @media (max-width:1200px){
     .image {
-        height: 420px;
+        height: 420px !important;
     }
     .bg {
-        height: 500px;
+        height: 500px !important;
     }
 }
 
 
 @media (max-width:1000px){
     .image {
-        height: 400px;
+        height: 400px !important;
     }
     .bg {
         height: 400px !important;
+    }
+
+}
+
+@media (max-width:475px){
+    .name {
+        font-size: 60px !important;
+    }
+
+    .portfolio {
+        min-width: 300px;
+        margin: 5px 5px 5px 5px;
+    }
+
+    .image {
+        height: 150px !important;
+        min-width: 300px;
+        border-width: 1px;
+    }
+    .bg {
+        height: 175px !important;
     }
 
 }
@@ -123,13 +155,13 @@ p {
     transition:.15s;
 }
 
-
 .link:hover {
     color: rgb(179, 179, 179);
 }
 
-.name
+.home
 {
+    color: rgb(255, 255, 255);
     text-decoration: none; 
     -o-transition:.15s;
     -ms-transition:.15s;
@@ -138,7 +170,16 @@ p {
     transition:.15s;
 }
 
-
-.name:hover {
+.home:hover {
     color: rgb(179, 179, 179);
+    text-shadow: 0px 5px 6px #0000007a;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
