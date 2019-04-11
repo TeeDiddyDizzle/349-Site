@@ -80,13 +80,17 @@ a:active, a:focus {
         flex-wrap: nowrap;
     }
     #page1-div {
-        margin-left: 0%;
+        margin-left: 15%;
     }
 }
-@media (max-width: 1500px) {
+@media (max-width: 1200px) {
     .portfolio {
         flex-wrap: wrap;
     }
+    #page1-div {
+        margin-left: 5%;
+    }
+}
 }
 
 @media (max-width: 475px) {
