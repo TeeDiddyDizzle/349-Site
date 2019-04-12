@@ -29,8 +29,10 @@ p {
     letter-spacing: 2px;
 }
 
+
 a:active, a:focus {
     outline: none !important;
+    align-self: center;
 }
 
 .heading {
@@ -58,11 +60,30 @@ a:active, a:focus {
     padding: 0px 15px 0px 15px;
     min-height: 350px;
     height: 65vh !important;
-    max-height: 650px !important;
+    max-height: 850px !important;
     overflow: auto;
     box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.384);
-
 }
+
+.download {
+    position: fixed;
+    text-decoration: none;
+    color: rgb(176, 213, 248) !important;
+    margin-top: 30px;
+    margin-left: -100px;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.26);
+    font-size: 16px;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
+}
+
+.download:hover {
+    opacity: 0.7;
+}
+
 
 #page1-div {
     background-image: url('/Resume/Dat_Nguyen_April_2019001.png');
