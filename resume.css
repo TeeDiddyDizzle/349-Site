@@ -46,31 +46,52 @@ a:active, a:focus {
     height: 20px;
 }
   
-.portfolio {
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    flex-wrap: wrap; 
-    justify-content: space-between;
+.resume {
+    /* display: flex; */
+    /* flex-flow: column wrap; */
+    /* justify-content: space-between; */
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
     border-radius: 5px;
-    margin: 0 20px 10px 20px;
-    padding: 0px 15px 0px 15px;
+    margin: 0 20px 30px 20px;
+    padding: 50px 15px 0px 15px;
     min-height: 350px;
-    height: 65vh !important;
-    max-height: 850px !important;
-    overflow: auto;
+    max-height: 650px;
+    min-width: 550px;
+    -o-transition:.15s;
+    -ms-transition:.15s;
+    -moz-transition:.15s;
+    -webkit-transition:.15s;
+    transition:.15s;
     box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.384);
+    overflow: auto;
+}
+img {
+    max-width: 1000px !important;
+}
+
+.resume-img {
+    margin: auto;
+    display: flex;
+    background-image: url("/Resume/Dat_Resume.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /* background-position: center top; */
+    /* background-attachment: fixed; */
+    /* height: 100% !important; */
+    max-width: 1200px;
+    width: 100% !important;
+    min-height: 1500px;
 }
 
 .download {
     position: fixed;
     text-decoration: none;
     color: rgb(176, 213, 248) !important;
+    left: 20%;
     margin-top: 30px;
-    margin-left: -100px;
+    margin-left: 0px;
     text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.26);
     font-size: 16px;
     -o-transition:.15s;
@@ -96,7 +117,7 @@ a:active, a:focus {
 }
 
 @media (max-width: 1700px) {
-    .portfolio {
+    .resume {
         justify-content: space-around;
         flex-wrap: nowrap;
     }
@@ -105,8 +126,11 @@ a:active, a:focus {
     }
 }
 @media (max-width: 1200px) {
-    .portfolio {
+    .resume {
         flex-wrap: wrap;
+    }
+    .resume-img {
+        min-height: 120vw;
     }
     #page1-div {
         margin-left: 5%;
@@ -118,7 +142,7 @@ a:active, a:focus {
     .name {
         font-size: 60px !important;
     }
-    .portfolio {
+    .resume {
         margin: 5px 5px 5px 5px;
     }
     .tile {
