@@ -121,6 +121,9 @@ img {
         justify-content: space-around;
         flex-wrap: nowrap;
     }
+    .download {
+        left: 5%;
+    }
     #page1-div {
         margin-left: 15%;
     }
