@@ -8,13 +8,30 @@ body {
 }
 
 .name {
+    display: inline-block;
     color: white;
     font-family: bungee, sans-serif;
     font-size: 70px;
-    font-weight: 600;
+    font-weight: 700;
     margin-left: 50px;
     margin-bottom: 0;
     letter-spacing: 5px;
+    width: 100%;
+}
+
+.socials {
+    font-size: 30px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 100px;
+}
+.social-link {
+    color: rgb(182, 182, 182);
+}
+
+.social-link:hover {
+    transition: 0.3s;
+    opacity: 0.7;
 }
 
 .home {
