@@ -10,18 +10,17 @@ body{
     align-items: center;
 }
 
-
 .name {
     display: inline-block;
-    align-self: flex-start;
     color: white;
     font-family: bungee, sans-serif;
+    line-height: 70px;
     font-size: 70px;
     font-weight: 700;
     margin-left: 50px;
     margin-bottom: 0;
     letter-spacing: 5px;
-    width: 100%;
+    width: 97%;
 }
 
 .socials {
