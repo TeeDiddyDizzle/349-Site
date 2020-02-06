@@ -35,20 +35,6 @@ body {
     opacity: 0.7;
 }
 
-.socials {
-    font-size: 30px;
-    float: right;
-    margin-top: 20px;
-    margin-right: 100px;
-}
-.social-link {
-    color: rgb(182, 182, 182);
-}
-
-.social-link:hover {
-    transition: 0.3s;
-    opacity: 0.7;
-}
 .home {
     width: 300px !important;
 }
