@@ -16,14 +16,14 @@ body {
     margin-left: 50px;
     margin-bottom: 0;
     letter-spacing: 5px;
-    width: 100%;
+    width: 97%;
 }
 
 .socials {
     font-size: 30px;
     float: right;
-    margin-top: 20px;
-    margin-right: 100px;
+    margin-right: 50px;
+    margin-top: 40px;
 }
 .social-link {
     color: rgb(182, 182, 182);
