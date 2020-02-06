@@ -11,6 +11,7 @@ body {
     display: inline-block;
     color: white;
     font-family: bungee, sans-serif;
+    line-height: 70px;
     font-size: 70px;
     font-weight: 700;
     margin-left: 50px;
@@ -22,8 +23,7 @@ body {
 .socials {
     font-size: 30px;
     float: right;
-    margin-top: 20px;
-    margin-right: 100px;
+    margin-right: 50px;
 }
 .social-link {
     color: rgb(182, 182, 182);
