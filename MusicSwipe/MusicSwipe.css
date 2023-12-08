@@ -1,0 +1,39 @@
+body {
+    background-color: #333333; /* Dark gray background */
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#card-ontainer {
+    display: flex;
+    overflow: hidden;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    margin: 10px;
+    min-width: 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Material design shadow */
+    transition: transform 0.3s ease; /* Smooth transition for swiping */
+}
+
+.swiper {
+    width: 600px;
+    height: 300px;
+  }
+
+.overlay {
+    height: 100%;
+    width: 50%;
+    background-color: aqua;
+    opacity: 0.5;
+    position: relative;
+    /* z-index: 99; */
+    margin-bottom: -50%;
+}

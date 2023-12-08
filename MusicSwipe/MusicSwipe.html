@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Swipeable Cards</title>
+    <link rel="stylesheet" type="text/css" href="MusicSwipe.css">
+</head>
+<body>
+  <input type="hidden" id='hidden_token'>
+
+  <h1 id="genre-head">Choose Genre</h1>
+  <div id="genres-container"></div>
+  <!-- <button onclick="loadClient()">authorize and load</button>
+  <button onclick="execute()">execute</button> -->
+    <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div id="card-container" class="swiper-wrapper">
+          <!-- Slides manually hard coded into the html, but this card-container div should initially be empty and it should be populated after the genre is selected and cardLoader() is called -->
+          <div class="swiper-slide">Slide 1
+            <div class="overlay"></div>
+            <iframe class = "yt_player" width="560" height="315" src="https://www.youtube.com/embed/rxJtOm68TMk?si=zrMs5gaxtny2wWy1&amp;start=1&rel=0&autoplay=0&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="swiper-slide">Slide 2
+            <div class="overlay"></div>
+            <iframe class = "yt_player" width="560" height="315" src="https://www.youtube.com/embed/7z25ZZ3DHds?si=zrMs5gaxtny2wWy1&amp;start=1&rel=0&autoplay=0&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="swiper-slide">Slide 3</div>
+          ...
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+      
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+</body>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="MusicSwipe.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+  gapi.load("client:auth2", function() {
+    // gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
+  });
+  
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+</html>
