@@ -39,26 +39,13 @@ swiper.on('slideChangeTransitionStart', async function () {
 });
 
 function loadClient() {
-  gapi.client.setApiKey("AIzaSyDxXfbbJRF_Ntu9zReVK1bcZ7LNiOH-9K0");
+  // gapi.client.setApiKey("AIzaSyDxXfbbJRF_Ntu9zReVK1bcZ7LNiOH-9K0"); // Music Swipe API
+  gapi.client.setApiKey("AIzaSyCQEU37aU2xl3X0WeijqS7RDqjHEkAdcvM"); // Music Swipe 2 API
   return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
       .then(function() { console.log("GAPI client loaded for API"); },
             function(err) { console.error("Error loading GAPI client for API", err); });
 }
-// Make sure the client is loaded and sign-in is complete before calling this method.
-function execute() {
-  return gapi.client.youtube.search.list({
-    "part": [
-      "snippet"
-    ],
-    "maxResults": 25,
-    "q": "surfing"
-  })
-      .then(function(response) {
-              // Handle the results here (response.result has the parsed body).
-              console.log("Response", response);
-            },
-            function(err) { console.error("Execute error", err); });
-}
+
 const SpotifyAPI = (function() {
   const clientId = 'f15e198dba434061abcfae185f303592';
   const clientSecret = '41c7f09497da4b8a9291909b0e48e3ba';
@@ -83,8 +70,6 @@ const SpotifyAPI = (function() {
         headers: { 'Authorization' : 'Bearer ' + token}
     });
     const data = await result.json();
-    console.log(data);
-
     return data.categories.items;
   }
   const _getPlaylistByGenre = async (token, genreId) => {
@@ -99,11 +84,9 @@ const SpotifyAPI = (function() {
     const data = await result.json();
     return data.playlists.items;
   }
-  const _getTracks = async (token, tracksEndPoint) => {
-
-    const limit = 10;
-
-    const result = await fetch(`${tracksEndPoint}?limit=${limit}`, {
+  const _getTracks = async (token, tracksEndPoint, offset = 0) => {
+    const limit = 100;
+    const result = await fetch(`${tracksEndPoint}?limit=${limit}&offset=${offset}`, {
         method: 'GET',
         headers: { 'Authorization' : 'Bearer ' + token}
     });
@@ -111,6 +94,7 @@ const SpotifyAPI = (function() {
     const data = await result.json();
     return data.items;
   }
+  
   const _getTrack = async (token, trackEndPoint) => {
 
     const result = await fetch(`${trackEndPoint}`, {
@@ -132,8 +116,8 @@ const SpotifyAPI = (function() {
     getPlaylistByGenre(token, genreId) {
         return _getPlaylistByGenre(token, genreId);
     },
-    getTracks(token, tracksEndPoint) {
-        return _getTracks(token, tracksEndPoint);
+    getTracks(token, tracksEndPoint, offset) {
+        return _getTracks(token, tracksEndPoint, offset);
     },
     getTrack(token, trackEndPoint) {
         return _getTrack(token, trackEndPoint);
@@ -142,39 +126,75 @@ const SpotifyAPI = (function() {
 
 })();
 
-const cardLoader = async function(genreId, genreName){
-  try {
-    const token = await SpotifyAPI.getToken();
-    const playlists = await SpotifyAPI.getPlaylistByGenre(token, genreId);
-    // Assuming the first playlist is chosen
-    const tracks = await SpotifyAPI.getTracks(token, playlists[0].tracks.href);
-    // Randomly select a track
-    const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
-    const trackTitle = randomTrack.name;
+async function getRandomSpotifyTracks(token, tracksEndPoint, numberOfTracks = 1) {
+  const maxOffset = 50; // Adjust based on total tracks available
+  const randomOffset = Math.floor(Math.random() * maxOffset);
+  const tracks = await SpotifyAPI.getTracks(token, tracksEndPoint, randomOffset);
+  
+  let selectedTracks = [];
+  for (let i = 0; i < numberOfTracks; i++) {
+    const randomIndex = Math.floor(Math.random() * tracks.length);
+    selectedTracks.push(tracks[randomIndex]);
+  }
+  console.log(selectedTracks);
+  // console.log("Random Song" + selectedTracks.track.name);
 
-    // Search for this track on YouTube
-    await loadClient(); // Ensure YouTube API client is loaded
+  return selectedTracks;
+}
+
+const videoIndex = 0;
+
+async function populateCard(trackTitle, autoplay) {
+  try {
+    // await loadClient(); // Ensure YouTube API client is loaded
+    console.log("Populate" + " " + trackTitle + " " + videoIndex);
     const response = await gapi.client.youtube.search.list({
       part: "snippet",
       maxResults: 1,
       q: `${trackTitle} music video`
     });
 
-    // Assume the first result is the desired video
     const videoId = response.result.items[0].id.videoId;
-    const iframeUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1`;
+    const iframeUrl = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=${autoplay}&enablejsapi=1`;
 
-    // Create and append the new swiper slide
     const swiperContainer = document.querySelector('#card-container');
     const newSlide = document.createElement('div');
     newSlide.classList.add('swiper-slide');
-    newSlide.innerHTML = `<iframe class="yt_player" width="560" height="315" src="${iframeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    newSlide.innerHTML = `<div class="overlay"></div>`;
+    newSlide.innerHTML += `<iframe class="yt_player" width="560" height="315" src="${iframeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
     swiperContainer.appendChild(newSlide);
 
-    // Update Swiper
     swiper.update();
+    videoIndex++;
   } catch (error) {
-    console.error('Error loading track and video:', error);
+    console.error('Error populating card:', error);
+  }
+}
+
+const cardLoader = async function(genreId, genreName) {
+  try {
+    const token = await SpotifyAPI.getToken();
+    const playlists = await SpotifyAPI.getPlaylistByGenre(token, genreId);
+
+    const initialTracks = await getRandomSpotifyTracks(token, playlists[0].tracks.href, 2);
+    var index = 0;
+    initialTracks.forEach(song => {
+      //Only the very first video should have autoplay enabled
+      console.log (song.track.name + " " + index);
+      if (index == 0) populateCard(song.track.name, 1);
+      else populateCard(song.track.name, 0);
+      index++;
+    });
+
+    swiper.on('slideChangeTransitionStart', async function () {
+      console.log("Swipe");
+      if (swiper.activeIndex === swiper.slides.length - 1) { // User is on the last slide
+        const newTracks = await getRandomSpotifyTracks(token, playlists[0].tracks.href, 1);
+        populateCard(newTracks[0].track.name, 1);
+      }
+    });
+  } catch (error) {
+    console.error('Error in cardLoader:', error);
   }
 };
 

@@ -32,7 +32,7 @@ body {
     height: 100%;
     width: 50%;
     background-color: aqua;
-    opacity: 0.5;
+    opacity: 0.1;
     position: relative;
     /* z-index: 99; */
     margin-bottom: -50%;
