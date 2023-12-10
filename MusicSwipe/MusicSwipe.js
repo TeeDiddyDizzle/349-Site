@@ -1,7 +1,7 @@
 const swiper = new Swiper('.swiper', {
     // Optional parameters
     direction: 'vertical',
-    loop: true,
+    loop: false,
   
     // If we need pagination
     pagination: {
@@ -38,9 +38,22 @@ swiper.on('slideChangeTransitionStart', async function () {
   // start();
 });
 
+class VideoData {
+  constructor(songName, spotifySongId, spotifyGenre) {
+      this.songName = songName;
+      this.spotifySongId = spotifySongId;
+      this.spotifyGenre = spotifyGenre;
+      this.watchTime = 0;
+  }
+
+  updateWatchTime(newTime) {
+      this.watchTime += newTime;
+  }
+}
+
 function loadClient() {
-  // gapi.client.setApiKey("AIzaSyDxXfbbJRF_Ntu9zReVK1bcZ7LNiOH-9K0"); // Music Swipe API
-  gapi.client.setApiKey("AIzaSyCQEU37aU2xl3X0WeijqS7RDqjHEkAdcvM"); // Music Swipe 2 API
+  gapi.client.setApiKey("AIzaSyDxXfbbJRF_Ntu9zReVK1bcZ7LNiOH-9K0"); // Music Swipe API
+  // gapi.client.setApiKey("AIzaSyCQEU37aU2xl3X0WeijqS7RDqjHEkAdcvM"); // Music Swipe 2 API
   return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
       .then(function() { console.log("GAPI client loaded for API"); },
             function(err) { console.error("Error loading GAPI client for API", err); });
@@ -126,15 +139,26 @@ const SpotifyAPI = (function() {
 
 })();
 
+let selectedTrackIds = [];
+
 async function getRandomSpotifyTracks(token, tracksEndPoint, numberOfTracks = 1) {
+  console.log ("Random Song: " + numberOfTracks);
   const maxOffset = 50; // Adjust based on total tracks available
   const randomOffset = Math.floor(Math.random() * maxOffset);
   const tracks = await SpotifyAPI.getTracks(token, tracksEndPoint, randomOffset);
   
   let selectedTracks = [];
+  let attempts = 0;
+
   for (let i = 0; i < numberOfTracks; i++) {
     const randomIndex = Math.floor(Math.random() * tracks.length);
-    selectedTracks.push(tracks[randomIndex]);
+    const song = tracks[randomIndex];
+
+    if (song && !selectedTrackIds.includes(song.track.id)) {
+      selectedTracks.push(song);
+      selectedTrackIds.push(song.id); // Add track ID to the list of selected tracks
+    }
+    attempts++;
   }
   console.log(selectedTracks);
   // console.log("Random Song" + selectedTracks.track.name);
@@ -142,23 +166,29 @@ async function getRandomSpotifyTracks(token, tracksEndPoint, numberOfTracks = 1)
   return selectedTracks;
 }
 
-const videoIndex = 0;
+let videoIndex = 0;
 
-async function populateCard(trackTitle, autoplay) {
+async function populateCard(trackTitle, autoplay, spotifySongId, spotifyGenre) {
   try {
     // await loadClient(); // Ensure YouTube API client is loaded
-    console.log("Populate" + " " + trackTitle + " " + videoIndex);
     const response = await gapi.client.youtube.search.list({
       part: "snippet",
       maxResults: 1,
       q: `${trackTitle} music video`
     });
+    await console.log("query:" + JSON.stringify(response.result, null, 2));
+    await console.log("Populate" + " " + trackTitle + " " + videoIndex);
 
     const videoId = response.result.items[0].id.videoId;
     const iframeUrl = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=${autoplay}&enablejsapi=1`;
 
     const swiperContainer = document.querySelector('#card-container');
     const newSlide = document.createElement('div');
+
+    newSlide.dataset.songName = trackTitle;
+    newSlide.dataset.spotifySongId = spotifySongId;
+    newSlide.dataset.spotifyGenre = spotifyGenre;
+
     newSlide.classList.add('swiper-slide');
     newSlide.innerHTML = `<div class="overlay"></div>`;
     newSlide.innerHTML += `<iframe class="yt_player" width="560" height="315" src="${iframeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
@@ -177,26 +207,67 @@ const cardLoader = async function(genreId, genreName) {
     const playlists = await SpotifyAPI.getPlaylistByGenre(token, genreId);
 
     const initialTracks = await getRandomSpotifyTracks(token, playlists[0].tracks.href, 2);
-    var index = 0;
-    initialTracks.forEach(song => {
-      //Only the very first video should have autoplay enabled
-      console.log (song.track.name + " " + index);
-      if (index == 0) populateCard(song.track.name, 1);
-      else populateCard(song.track.name, 0);
-      index++;
+
+    // Map each track to a promise of a populated card
+    const populatePromises = initialTracks.map((song, index) => {
+      const autoplay = (index === 0) ? 1 : 0; // Autoplay only the first video
+      return populateCard(song.track.name, autoplay, song.track.id, genreId);
     });
 
-    swiper.on('slideChangeTransitionStart', async function () {
-      console.log("Swipe");
-      if (swiper.activeIndex === swiper.slides.length - 1) { // User is on the last slide
-        const newTracks = await getRandomSpotifyTracks(token, playlists[0].tracks.href, 1);
-        populateCard(newTracks[0].track.name, 1);
-      }
-    });
+    // Wait for all cards to be populated
+    await Promise.all(populatePromises);
+
+    // Setup swiper event listener for loading new cards
+    setupSwiperListener(token, playlists[0].tracks.href);
   } catch (error) {
     console.error('Error in cardLoader:', error);
   }
 };
+
+function setupSwiperListener(token, tracksHref) {
+  let currentVideo = null;
+  let videoStartTime = 0;
+  swiper.on('slideChangeTransitionStart', async function () {
+    
+    swiper.on('slideChangeTransitionStart', async function () {
+      if (currentVideo && videoStartTime !== 0) {
+          let watchDuration = (Date.now() - videoStartTime) / 1000;
+          currentVideo.updateWatchTime(watchDuration);
+  
+          // Process or store currentVideo data as needed
+          console.log(currentVideo);
+      }
+  
+      // Assuming you store song data in the slide's dataset
+      let activeSlideData = swiper.slides[swiper.activeIndex].dataset;
+      if (activeSlideData) {
+          currentVideo = new VideoData(activeSlideData.songName, activeSlideData.spotifySongId, activeSlideData.spotifyGenre);
+          videoStartTime = Date.now();
+      }
+  
+
+    if (swiper.activeIndex === swiper.slides.length - 1) {
+      const newTracks = await getRandomSpotifyTracks(token, tracksHref, 1);
+      populateCard(newTracks[0].track.name, 1);
+      
+      
+      let nextSlideIndex = swiper.previousIndex; // Index of slide that is currently active
+      let nextSlide = swiper.slides[nextSlideIndex]; // Get the current slide
+      let nextIframe = nextSlide.querySelector('.yt_player'); // Find the YouTube player in the current slide
+    
+      // if (nextIframe) {
+      //   nextIframe.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+      // }
+    
+      // let activeSlide = swiper.slides[swiper.activeIndex];
+      //   let activeIframe = activeSlide.querySelector('.yt_player');
+      //   if (activeIframe && activeIframe.contentWindow) {
+      //       activeIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      //   }
+      
+    }
+  });
+}
 
 const UILoader = (function() {
   const DomElements = {

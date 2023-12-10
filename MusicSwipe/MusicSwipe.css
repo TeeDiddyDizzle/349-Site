@@ -1,5 +1,7 @@
 body {
     background-color: #333333; /* Dark gray background */
+    font-family: 'Roboto', 'Arial', sans-serif;
+
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -8,9 +10,38 @@ body {
     margin: 0;
 }
 
-#card-ontainer {
+h1 {
+    text-align: center;
+    color: #212121;
+}
+
+#card-container {
     display: flex;
-    overflow: hidden;
+    /* overflow: hidden; */
+}
+
+#genres-container button {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 16px;
+}
+
+/* Button Hover Effect */
+#genres-container button:hover {
+    background-color: #e0e0e0; /* Light grey */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Active Genre Button Styling */
+#genres-container button.active {
+    background-color: #2196F3; /* Blue */
+    color: white;
 }
 
 .card {
