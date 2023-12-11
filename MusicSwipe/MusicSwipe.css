@@ -67,6 +67,14 @@ h1 {
   }
 
 
+.swiper-pagination-bullet-active {
+    height: 15px !important;
+    border-radius: 100px !important;
+    background-color: #ffffff !important; /* Active bullet color */
+    opacity: 0.7 !important;
+}
+
+
 
 .yt_player {
     position: absolute;
@@ -98,25 +106,50 @@ h1 {
     z-index: 100; /* Ensure it's above other content */
   }
   
-  .floating-btn {
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .dislike {
-    /* Style for dislike button */
-    background-color: #000000; /* Red */
-    color: #fff;
-  }
-  
-  .like {
-    /* Style for like button */
-    background-color: #929292; /* Green */
-    color: #fff;
-  }
+.floating-btn {
+padding: 10px 20px;
+margin: 0 10px;
+border: none;
+border-radius: 5px;
+background-color: #fff;
+cursor: pointer;
+color: white;
+transition: opacity 0.3s, margin-top 0.5s, color 0.2s;
+box-shadow: 4px 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+.fade-out {
+transition: opacity 0.3s, margin-top 0.5s;
+opacity: 0; 
+margin-top: 200px;
+}
+
+.fade-in {
+transition: opacity 1s, margin-top 0.5s;
+opacity: 1; 
+}
+
+.dis-fade-out {
+transition: opacity 0.3s, margin-top 0.5s, color 0.2s;
+color: black !important;
+opacity: 0; 
+margin-top: 200px;
+}
+
+.dis-fade-in {
+transition: opacity 1s, margin-top 0.5s;
+opacity: 1; 
+}
+
+.dislike {
+/* Style for dislike button */
+background-color: #000000; /* Red */
+color: #fff;
+}
+
+.like {
+/* Style for like button */
+background-color: #929292; /* Green */
+color: #fff;
+}
 
