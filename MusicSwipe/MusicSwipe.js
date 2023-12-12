@@ -58,18 +58,136 @@ class VideoData {
 }
 
 function loadClient() {
-  // gapi.client.setApiKey("AIzaSyDxXfbbJRF_Ntu9zReVK1bcZ7LNiOH-9K0"); // Music Swipe API
+  gapi.client.setApiKey("AIzaSyDxXfbbJRF_Ntu9zReVK1bcZ7LNiOH-9K0"); // Music Swipe API
   // gapi.client.setApiKey("AIzaSyCQEU37aU2xl3X0WeijqS7RDqjHEkAdcvM"); // Music Swipe 2 API
-  gapi.client.setApiKey("AIzaSyBrdsRTrb9Gxh4TG3HVR3RnffYIegPIhUY"); // Music Swipe 3 API
-  
+  // gapi.client.setApiKey("AIzaSyBrdsRTrb9Gxh4TG3HVR3RnffYIegPIhUY"); // Music Swipe 3 API
+
   return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
       .then(function() { console.log("GAPI client loaded for API"); },
             function(err) { console.error("Error loading GAPI client for API", err); });
+            
 }
 
 const SpotifyAPI = (function() {
-  const clientId = 'f15e198dba434061abcfae185f303592';
-  const clientSecret = '41c7f09497da4b8a9291909b0e48e3ba';
+  // const clientId = 'f15e198dba434061abcfae185f303592'; 
+  // const clientSecret = '41c7f09497da4b8a9291909b0e48e3ba';
+  const clientId = '3e428ecf7b6d47e09ef48f3924faa9bf'; //Music Swipe 2
+  const clientSecret = 'c1f61168eac74081aa961231436c1a09'; //Music Swipe 2
+  var access_token;
+  var refresh_token;
+  var playlist_id;
+
+  // Spotify OAuth configuration
+  const redirectUri = 'http://localhost:5500/MusicSwipe/MusicSwipe.html'; // Must match the one set in the Spotify dashboard
+  const scopes = 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public'; // Space-separated list of scopes
+
+
+  // Attach event listener to login button
+  document.getElementById('spotify-login-btn').addEventListener('click', async function() {
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&response_type=code&show_dialog=true`;
+    window.location.href = authUrl;
+  });
+
+  const _refreshAccessToken = async (refreshToken) => {
+    const result = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+      },
+      body: `grant_type=refresh_token&refresh_token=${refreshToken}`
+    });
+  
+    const data = await result.json();
+    return {
+      accessToken: data.access_token,
+      expiresIn: data.expires_in
+    };
+  }
+
+  // Exchange the authorization code for an access token
+ const _fetchAccessToken = async (code) => {
+    const tokenUrl = 'https://accounts.spotify.com/api/token';
+    const redirectUri = 'http://localhost:5500/MusicSwipe/MusicSwipe.html'; // Must match the one set in the Spotify dashboard
+
+    const response = await fetch(tokenUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: redirectUri
+      })
+    });
+
+    const data = await response.json();
+    return data.access_token;
+  }
+
+  const _getUserId = async (accessToken) => {
+    try {
+      const response = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + accessToken }
+      });
+      const data = await response.json();
+      return data.id; // This is the user's Spotify ID
+    } catch (error) {
+      console.error('Error fetching user ID:', error);
+      throw error;
+    }
+  }
+
+  const _createPlaylist = async (accessToken, playlistName) => {
+    try {
+      const userId = await _getUserId(accessToken);
+      console.log(userId)
+      const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: playlistName,
+          description: `${userId}'s playlist from MusicSwipe`, // You can customize this
+          public: false // Set to true if you want the playlist to be public
+        })
+      });
+      const data = await response.json();
+      const tempPlaylistId = await data.id;
+      playlist_id = tempPlaylistId;
+      console.log(playlist_id);
+      return data; // This is the newly created playlist object
+    } catch (error) {
+      console.error('Error creating playlist:', error);
+      throw error;
+    }
+  }
+
+  const _addSongsToPlaylist = async (token, playlistId, songs) => {
+    const uris = songs.map(song => song.track.uri); // Assuming each song object has a uri property
+    
+    console.log("Adding Songs");
+    console.log(uris);
+    const result = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ uris: uris })
+    });
+
+    if (!result.ok) {
+      throw new Error(`HTTP error! status: ${result.status}`);
+    }
+
+    return await result.json();
+  }
 
   const _getToken = async () => {
     const result = await fetch('https://accounts.spotify.com/api/token', {
@@ -84,6 +202,7 @@ const SpotifyAPI = (function() {
     const data = await result.json();
     return data.access_token;
   }
+
   const _getCategories = async (token) => {
 
     const result = await fetch(`https://api.spotify.com/v1/browse/categories?locale=sv_US&limit=10`, {
@@ -106,6 +225,7 @@ const SpotifyAPI = (function() {
     const data = await result.json();
     return data.playlists.items;
   }
+
   const _getTracks = async (token, tracksEndPoint, offset = 0) => {
     const limit = 100;
     const result = await fetch(`${tracksEndPoint}?limit=${limit}&offset=${offset}`, {
@@ -116,7 +236,7 @@ const SpotifyAPI = (function() {
     const data = await result.json();
     return data.items;
   }
-  
+
   const _getTrack = async (token, trackEndPoint) => {
 
     const result = await fetch(`${trackEndPoint}`, {
@@ -136,15 +256,15 @@ const SpotifyAPI = (function() {
 
     const data = await result.json();
     return data.genres; // Assuming the API returns an array of genres
-  };
+  }
 
-  const _getRecommendations = async (token, seedObj, trackAttributes) => {
+  const _getRecommendations = async (token, numberOfTracks, seedObj, trackAttributes) => {
     
-    console.log("Seed Tracks Array Test:", seedObj);
+    console.log("Recommendation Seed Objects:", seedObj);
 
     
     const queryParams = new URLSearchParams({
-      limit: 1, 
+      limit: numberOfTracks, 
       market: 'US', 
       seed_tracks: seedObj.seed_tracks.join(','), 
       seed_artists: seedObj.seed_artists.join(','), 
@@ -164,40 +284,65 @@ const SpotifyAPI = (function() {
     });
 
     const data = await result.json();
-    await console.log(data);
+    // await console.log(data);
     return data.tracks;
-  };
+  }
 
   return {
-    getToken() {
-        return _getToken();
-    },
-    getCategories(token) {
-        return _getCategories(token);
-    },
-    getPlaylistByGenre(token, genreId) {
-        return _getPlaylistByGenre(token, genreId);
-    },
-    getTracks(token, tracksEndPoint, offset) {
-        return _getTracks(token, tracksEndPoint, offset);
-    },
-    getTrack(token, trackEndPoint) {
-        return _getTrack(token, trackEndPoint);
-    },
-    getArtistGenres(token, artistId) {
-      return _getArtistGenres(token, artistId);
-    },
-    getRecommendations(token, seedObj, trackAttributes) {
-      return _getRecommendations(token, seedObj, trackAttributes);
-    }
+    getUserId: (accessToken) => _getUserId(accessToken),
+    createPlaylist: (accessToken, playlistName) => _createPlaylist(accessToken, playlistName),
+    addSongsToPlaylist: (token, playlistId, songs) => _addSongsToPlaylist(token, playlistId, songs),
+    refreshAccessToken: (refreshToken) => _refreshAccessToken(refreshToken),
+    fetchAccessToken: (code) => _fetchAccessToken(code),
+    getToken: () => _getToken(),
+    getCategories: (token) => _getCategories(token),
+    getPlaylistByGenre: (token, genreId) => _getPlaylistByGenre(token, genreId),
+    getTracks: (token, tracksEndPoint, offset) => _getTracks(token, tracksEndPoint, offset),
+    getTrack: (token, trackEndPoint) => _getTrack(token, trackEndPoint),
+    getArtistGenres: (token, artistId) => _getArtistGenres(token, artistId),
+    getRecommendations: (token, numberOfTracks, seedObj, trackAttributes) => _getRecommendations(token, numberOfTracks, seedObj, trackAttributes),
+    access_token,
+    refresh_token,
+    playlist_id,
   };
 
 })();
 
 let selectedTrackIds = [];
+var spotifyPlaylistId;
+
+async function generateSpotifyPlaylist() {
+  document.getElementById('sidebar').classList.remove('menu-active');
+  document.body.classList.remove('menu-active');
+
+  console.log("Generating Playlist");
+  if (selectedTrackIds.length >= 3){
+    try {
+      const accessToken = SpotifyAPI.access_token;
+      const playlistName = 'Music Swipe Playlist';
+  
+      const playlist = await SpotifyAPI.createPlaylist(accessToken, playlistName);
+      // console.log('Playlist created:', playlist);
+      const playlistId = playlist.id;
+      const recommendedTracks = await spotifyRecommendations(20);
+      console.log(recommendedTracks);
+      spotifyPlaylistId = playlistId;
+      await SpotifyAPI.addSongsToPlaylist(accessToken, playlistId, recommendedTracks);
+      
+    } catch (error) {
+      console.error('Error handling Spotify redirect:', error);
+    }
+  }
+  else {
+    alert("Not enough data, try again after swiping through 3 or more songs!");
+  }
+  
+}
+
+// async function playlistUpdate()
 
 async function getRandomSpotifyTracks(token, tracksEndPoint, numberOfTracks = 1) {
-  console.log ("Random Song: " + numberOfTracks);
+  // console.log ("Random Song: " + numberOfTracks);
   const maxOffset = 50; // Adjust based on total tracks available
   const randomOffset = Math.floor(Math.random() * maxOffset);
   const tracks = await SpotifyAPI.getTracks(token, tracksEndPoint, randomOffset);
@@ -215,7 +360,7 @@ async function getRandomSpotifyTracks(token, tracksEndPoint, numberOfTracks = 1)
     }
     attempts++;
   }
-  console.log(selectedTracks);
+  // console.log(selectedTracks);
 
   if (numberOfTracks!= selectedTracks.length) {
     console.log("Random Tracks not enough tracks");
@@ -230,7 +375,7 @@ function getTrackWithLongestWatchTime() {
   return Object.keys(videoDataMap).reduce((a, b) => videoDataMap[a].watchTime > videoDataMap[b].watchTime ? a : b);
 }
 
-async function spotifyRecommendations() {
+async function spotifyRecommendations(numberOfTracks = 1) {
   const token = await SpotifyAPI.getToken();
   const genreFrequency = {};
   const artistLikes = {};
@@ -288,7 +433,7 @@ async function spotifyRecommendations() {
   }
 
   // Fetch recommendations from Spotify
-  const recommendations = await SpotifyAPI.getRecommendations(token, {
+  const recommendations = await SpotifyAPI.getRecommendations(token, numberOfTracks, {
     seed_artists: seedArtist ? [seedArtist] : [],
     seed_tracks: seedTracks.slice(0, 2),
     seed_genres: seedGenres
@@ -297,23 +442,20 @@ async function spotifyRecommendations() {
   return recommendations.map(track => ({track}));
 }
 
-
-
-
 let videoIndex = 0;
 
 async function populateCard(trackTitle, autoplay, spotifySongId, spotifyArtistsObj, spotifyGenre) {
   try {
-    // const response = await gapi.client.youtube.search.list({
-    //   part: "snippet",
-    //   maxResults: 1,
-    //   q: `${trackTitle} Official Music Video`
-    // });
-    await console.log("\nPopulate" + " " + trackTitle + " " + spotifyArtistsObj + " " + videoIndex);
+    const response = await gapi.client.youtube.search.list({
+      part: "snippet",
+      maxResults: 1,
+      q: `${trackTitle} Official Music Video`
+    });
+    await console.log("\nPopulate Song #" + videoIndex + " - " + trackTitle );
 
-    // const videoId = response.result.items[0].id.videoId;
-    // const iframeUrl = `https://www.youtube.com/embed/${videoId}?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`;
-    const iframeUrl = `https://www.youtube.com/embed/EIilZl_iuIo?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`; //tempvideo
+    const videoId = response.result.items[0].id.videoId;
+    const iframeUrl = `https://www.youtube.com/embed/${videoId}?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`;
+    // const iframeUrl = `https://www.youtube.com/embed/EIilZl_iuIo?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`; //tempvideo
 
     // Get viewport width 
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -376,7 +518,7 @@ async function populateCard(trackTitle, autoplay, spotifySongId, spotifyArtistsO
     newSlide.dataset.spotifyGenre = spotifyGenre;
 
     newSlide.classList.add('swiper-slide');
-    newSlide.innerHTML = `<div class="overlay">${trackTitle}</div>`;
+    newSlide.innerHTML = `<div class="overlay"><span>${trackTitle}</span></div>`;
     newSlide.innerHTML += iframe;
     swiperContainer.appendChild(newSlide);
 
@@ -393,6 +535,7 @@ var btnContainer;
 
 const cardLoader = async function(genreId, genreName) {
   try {
+
     const token = await SpotifyAPI.getToken();
     const playlists = await SpotifyAPI.getPlaylistByGenre(token, genreId);
     console.log("Playlist: " + playlists[0].name);
@@ -411,9 +554,11 @@ const cardLoader = async function(genreId, genreName) {
       </div>
     `;
 
+    await document.querySelector('.menu').appendChild(playListButton);
+    await document.querySelector('.swiper').classList.remove('swiper-min');
     await document.getElementById('sidebar').classList.remove('menu-active');
     await document.body.classList.remove('menu-active');
-    await document.body.classList.add('.no-bg');
+    await document.body.classList.add('no-bg');
     await document.getElementById('genre-head').remove();
     await document.getElementById('genres-container').remove();
     await document.querySelector('.swiper').insertAdjacentHTML('afterbegin', floatingButtons);
@@ -444,6 +589,8 @@ function setupSwiperListener(token, tracksHref) {
     btnContainer.classList.remove('fade-in');
     btnContainer.classList.remove('dis-fade-in');
     btnContainer.classList.add('fade-out');
+    document.getElementById('sidebar').classList.remove('menu-active');
+    document.body.classList.remove('menu-active');
   });
   
   dislikeBtn.addEventListener('click', () => {
@@ -457,6 +604,9 @@ function setupSwiperListener(token, tracksHref) {
 
   swiper.on('slideChangeTransitionStart', async function () {
     
+    btnContainer.classList.remove('fade-in');
+    btnContainer.classList.remove('dis-fade-in');
+
     document.getElementById('sidebar').classList.remove('menu-active');
     document.body.classList.remove('menu-active');
 
@@ -468,8 +618,15 @@ function setupSwiperListener(token, tracksHref) {
       btnContainer.classList.add('fade-in');
     }
 
+    btnContainer.classList.add('dis-fade-out');
 
     let previousSlideData = swiper.slides[swiper.previousIndex].dataset;
+
+    if (currentOpinion == 1 && spotifyPlaylistId) {
+      var songURI = [{track: {uri: `spotify:track:${previousSlideData.spotifySongId}`} }];
+      SpotifyAPI.addSongsToPlaylist(SpotifyAPI.access_token, spotifyPlaylistId, songURI);
+    }
+
     if (previousSlideData && previousSlideData.spotifySongId) {
       var previousVideo;
       if (videoIndex == 0) {
@@ -512,7 +669,9 @@ function setupSwiperListener(token, tracksHref) {
     try {
       var newTracks;
       if (selectedTrackIds.length >= 3) {
-        newTracks = await spotifyRecommendations(token);
+        newTracks = await spotifyRecommendations();
+        console.log('Got recommendations');
+        console.log(newTracks);
       }
       else {
         newTracks = await getRandomSpotifyTracks(token, tracksHref, 1);
@@ -538,6 +697,12 @@ function setupSwiperListener(token, tracksHref) {
       btnContainer.classList.remove('fade-out');
       btnContainer.classList.add('dis-fade-in');
     }
+    else {
+      await new Promise(resolve => setTimeout(resolve, 500)); 
+      btnContainer.classList.remove('dis-fade-out');
+      btnContainer.classList.remove('fade-out');
+      btnContainer.classList.add('dis-fade-in');
+    }
   };
 
     // Load new cards if we reach the end
@@ -545,19 +710,10 @@ function setupSwiperListener(token, tracksHref) {
     if(swiper.activeIndex === swiper.slides.length - 1) {
       await retryPopulate(0);
     };
-
-    // if (swiper.activeIndex === swiper.slides.length - 1) {
-    //   const newTracks = await getRandomSpotifyTracks(token, tracksHref, 1);
-    //   try {
-    //     await populateCard(newTracks[0].track.name, 0, newTracks[0].track.id, activeSlideData.spotifyGenre);
-    //   } catch (error) {
-
-    //     console.log("Error populating new card. rying again");
-    //     await populateCard(newTracks[0].track.name, 0, newTracks[0].track.id, activeSlideData.spotifyGenre);
-    //   }
-    // }
   });
 }
+
+const playListButton = document.createElement('a');
 
 const UILoader = (function() {
   const DomElements = {
@@ -566,7 +722,24 @@ const UILoader = (function() {
     genresContainer: '#genres-container',
   }
 
+  if (window.location.search.includes('code=')) {
+    document.getElementById('spotify-login-btn').remove();
+    // handleSpotifyRedirect();
+    playListButton.classList.add('spotify-playlist-button');
+    playListButton.href = '#';
+    playListButton.onclick = generateSpotifyPlaylist;
+    playListButton.textContent = 'Generate Spotify Playlist';
+
+    // const IDButton = document.createElement('a');
+    // IDButton.href = '#';
+    // IDButton.onclick = getSpotifyUser;
+    // IDButton.textContent = 'Get User ID';
+    // document.querySelector('.menu').appendChild(IDButton);
+  }
+
   return {
+
+    
     createGenre(text, value) {
       const button = document.createElement('button');
       button.classList.add('genre-button');
@@ -596,6 +769,16 @@ const UILoader = (function() {
 
 const SpotifyLoader = (function(UICtrl, APICtrl){
   const loadGenres = async () => {
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    
+    if (urlParams.get('code')) {
+      console.log("Logged in, retrieved Spotify Access Code from URL");
+      const tempToken = await SpotifyAPI.fetchAccessToken(urlParams.get('code'));
+      SpotifyAPI.access_token = tempToken;
+    }
+
     const token = await APICtrl.getToken();
     const genres = await APICtrl.getCategories(token);
     // console.log(UICtrl);
