@@ -304,16 +304,16 @@ let videoIndex = 0;
 
 async function populateCard(trackTitle, autoplay, spotifySongId, spotifyArtistsObj, spotifyGenre) {
   try {
-    const response = await gapi.client.youtube.search.list({
-      part: "snippet",
-      maxResults: 1,
-      q: `${trackTitle} Official Music Video`
-    });
+    // const response = await gapi.client.youtube.search.list({
+    //   part: "snippet",
+    //   maxResults: 1,
+    //   q: `${trackTitle} Official Music Video`
+    // });
     await console.log("\nPopulate" + " " + trackTitle + " " + spotifyArtistsObj + " " + videoIndex);
 
-    const videoId = response.result.items[0].id.videoId;
-    const iframeUrl = `https://www.youtube.com/embed/${videoId}?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`;
-    // const iframeUrl = `https://www.youtube.com/embed/EIilZl_iuIo?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`; //tempvideo
+    // const videoId = response.result.items[0].id.videoId;
+    // const iframeUrl = `https://www.youtube.com/embed/${videoId}?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`;
+    const iframeUrl = `https://www.youtube.com/embed/EIilZl_iuIo?quality=highres?rel=0&autoplay=${autoplay}&enablejsapi=1`; //tempvideo
 
     // Get viewport width 
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
@@ -327,7 +327,7 @@ async function populateCard(trackTitle, autoplay, spotifySongId, spotifyArtistsO
     const iframeWidth = vh / 0.5625; 
     var iframe;
     // Create iframe
-    if (vw > 768) {
+    if (vw > 1600) {
       iframe = `
       <iframe 
         class="yt_player"
@@ -411,6 +411,9 @@ const cardLoader = async function(genreId, genreName) {
       </div>
     `;
 
+    await document.getElementById('sidebar').classList.remove('menu-active');
+    await document.body.classList.remove('menu-active');
+    await document.body.classList.add('.no-bg');
     await document.getElementById('genre-head').remove();
     await document.getElementById('genres-container').remove();
     await document.querySelector('.swiper').insertAdjacentHTML('afterbegin', floatingButtons);
@@ -453,6 +456,9 @@ function setupSwiperListener(token, tracksHref) {
 
 
   swiper.on('slideChangeTransitionStart', async function () {
+    
+    document.getElementById('sidebar').classList.remove('menu-active');
+    document.body.classList.remove('menu-active');
 
     btnContainer.classList.remove('fade-out');
     if (currentOpinion == 2) {
@@ -563,6 +569,7 @@ const UILoader = (function() {
   return {
     createGenre(text, value) {
       const button = document.createElement('button');
+      button.classList.add('genre-button');
       if (text == "Topplistor") {
         button.textContent = "Top Lists";
       } else {
@@ -600,6 +607,19 @@ const SpotifyLoader = (function(UICtrl, APICtrl){
   }
 
 })(UILoader, SpotifyAPI);
+
+document.addEventListener('DOMContentLoaded', function() {
+  var menuBtn = document.querySelector('.hamburger-menu');
+  var sidebar = document.getElementById('sidebar');
+  var body = document.body;
+
+  menuBtn.addEventListener('click', function() {
+
+    console.log("Menu clicked");
+    sidebar.classList.toggle('menu-active');
+    body.classList.toggle('menu-active');
+  });
+});
 
 window.onload = async function () {
   loadClient();
