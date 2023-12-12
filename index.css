@@ -148,6 +148,11 @@ a:active, a:focus {
     background-size: 400px 200px;
 }
 
+.t6 {
+    background-image: url('/ShrineHouse/ShrineHouse.png');
+    background-size: 400px 200px;
+}
+
 .t2 {
     background-image: url('/Ayli/Ayli1.png');
     background-size: 400px 200px;
