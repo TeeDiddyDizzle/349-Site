@@ -78,7 +78,8 @@ const SpotifyAPI = (function() {
   var playlist_id;
 
   // Spotify OAuth configuration
-  const redirectUri = 'http://localhost:5500/MusicSwipe/MusicSwipe.html'; // Must match the one set in the Spotify dashboard
+  const redirectUri = 'https://teediddydizzle.github.io/MusicSwipe/MusicSwipe.html'; // Must match the one set in the Spotify dashboard
+  // const redirectUri = 'http://localhost:5500/MusicSwipe/MusicSwipe.html'; // Must match the one set in the Spotify dashboard
   const scopes = 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public'; // Space-separated list of scopes
 
 
@@ -108,7 +109,6 @@ const SpotifyAPI = (function() {
   // Exchange the authorization code for an access token
  const _fetchAccessToken = async (code) => {
     const tokenUrl = 'https://accounts.spotify.com/api/token';
-    const redirectUri = 'http://localhost:5500/MusicSwipe/MusicSwipe.html'; // Must match the one set in the Spotify dashboard
 
     const response = await fetch(tokenUrl, {
       method: 'POST',
@@ -724,7 +724,6 @@ const UILoader = (function() {
 
   if (window.location.search.includes('code=')) {
     document.getElementById('spotify-login-btn').remove();
-    // handleSpotifyRedirect();
     playListButton.classList.add('spotify-playlist-button');
     playListButton.href = '#';
     playListButton.onclick = generateSpotifyPlaylist;
