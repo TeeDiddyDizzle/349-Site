@@ -144,20 +144,25 @@ a:active, a:focus {
 }
 
 .t1 {
-    background-image: url('/Ayli/Ayli1.png');
+    background-image: url('/MusicSwipe/MusicSwipe.png');
     background-size: 400px 200px;
 }
 
 .t2 {
+    background-image: url('/Ayli/Ayli1.png');
+    background-size: 400px 200px;
+}
+
+.t3 {
     background-image: url('/Open Inventory/OI1.png');
     background-size: 400px 200px;
 }
-.t3 {
+.t4 {
     background-image: url('/Sprite Game/Sprite.png');
     background-size: 430px 200px;
 }
 
-.t4 {
+.t5 {
     background-image: url('/TuffyPub/Tuff2.png');
     background-size: 400px 200px;
 }
